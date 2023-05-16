@@ -1,0 +1,26 @@
+name: reboot-example
+base: core20
+version: '0.1'
+summary: Example snap to show how to reboot a system
+description: |
+  Shows how to use the shutdown interface to reboot a system.
+
+grade: stable
+confinement: strict
+
+apps:
+  reboot:
+    command: usr/bin/reboot
+    environment:
+      PYTHONPATH: $SNAP/usr/lib/python3/dist-packages:$PYTHONPATH
+    plugs:
+      - shutdown
+
+parts:
+  reboot:
+    plugin: dump
+    source: .
+    organize:
+      reboot.py: usr/bin/reboot
+    stage-packages:
+      - python3-dbus
